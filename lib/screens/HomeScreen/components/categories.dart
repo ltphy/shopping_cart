@@ -1,6 +1,8 @@
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping/screens/HomeScreen/constant.dart';
+
+import 'MyModel.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -26,30 +28,33 @@ class _CategoriesState extends State<Categories> {
   }
 
   Widget buildCategory(int index) {
-    return GestureDetector(
-        onTap: () {
-          setState(() {
-            selectedIndex = index;
-          });
-        },
-        child: Container(
-            padding: EdgeInsets.symmetric(horizontal: defaultPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  categories[index],
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 5),
-                  width: 30,
-                  height: 2,
-                  color: selectedIndex == index
-                      ? Colors.black
-                      : Colors.transparent,
-                )
-              ],
-            )));
+    return Consumer<MyModel>(builder: (context, myModel, child) {
+      return GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedIndex = index;
+            });
+            myModel.doSomething();
+          },
+          child: Container(
+              padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    categories[index],
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 5),
+                    width: 30,
+                    height: 2,
+                    color: selectedIndex == index
+                        ? Colors.black
+                        : Colors.transparent,
+                  )
+                ],
+              )));
+    });
   }
 }

@@ -17,8 +17,7 @@ class _ItemListCardState extends State<ItemListCard> {
 
     print("RERENDER");
     return Container(
-        margin: EdgeInsets.only(top: 10),
-        padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+        padding: EdgeInsets.all(10),
         child: GridView.builder(
             itemCount: products.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
