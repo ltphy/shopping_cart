@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:shopping/screens/UserLogin/CustomScrollBehavior.dart';
 
 class UserLogin extends StatefulWidget {
   @override
@@ -39,25 +42,31 @@ class _UserLoginState extends State<UserLogin> {
   Future<void> showInfoDialog() async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      // barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                buildInputContainer(context, nameController, "Name"),
-                buildInputContainer(context, emailController, "Email"),
-                buildInputContainer(context, passwordController, "Password")
-              ],
-            ),
-          ),
+          content: ScrollConfiguration(
+              behavior: CustomScrollBehavior(),
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Container(
+                  padding: EdgeInsets.only(top: 200),
+                  child: Column(
+                    children: <Widget>[
+                      buildInputContainer(context, nameController, "Name"),
+                      buildInputContainer(context, emailController, "Email"),
+                      buildInputContainer(
+                          context, passwordController, "Password")
+                    ],
+                  ),
+                ),
+              )),
           actions: <Widget>[
             TextButton(
               child: Text('Approve'),
               onPressed: () {
-                // FocusScope.of(context).unfocus();
-                FocusManager.instance.primaryFocus.unfocus();
+                FocusScope.of(context).unfocus();
                 Navigator.of(context).pop();
               },
             ),
@@ -74,64 +83,74 @@ class _UserLoginState extends State<UserLogin> {
     return Scaffold(
       resizeToAvoidBottomPadding: false, // allow padding without resize UI.
       body: SingleChildScrollView(
-          reverse: true, //will let your scroll from bottom to top
+          reverse: true,
           child: Padding(
-            padding: EdgeInsets.only(bottom: bottom),
-            child: Container(
-                height: size.height,
-                width: size.width,
-                child: Column(
-                  children: <Widget>[
-                    Expanded(flex: 1, child: Container(color: Colors.black12)),
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                          child: Row(
-                        children: <Widget>[
-                          Expanded(
-                              flex: 1,
-                              child: Column(
-                                children: <Widget>[
-                                  Expanded(
-                                      flex: 4,
-                                      child: Container(
-                                          padding: EdgeInsets.zero,
-                                          color: Colors.orangeAccent,
-                                          child: MaterialButton(
-                                            color: Colors.white,
-                                            shape: CircleBorder(),
-                                            child: Icon(
-                                              Icons.add,
-                                              size: 24,
+              padding: EdgeInsets.only(bottom: bottom),
+              child: Container(
+                  height: size.height,
+                  width: size.width,
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                          flex: 1, child: Container(color: Colors.black12)),
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                            child: Row(
+                          children: <Widget>[
+                            Expanded(
+                                flex: 1,
+                                child: Column(
+                                  children: <Widget>[
+                                    Expanded(
+                                        flex: 4,
+                                        child: Container(
+                                            color: Colors.orangeAccent,
+                                            child: Row(children: <Widget>[
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.red,
+                                                ),
+                                                child: IconButton(
+                                                  icon: SvgPicture.asset(
+                                                    "assets/icons/stop-24px.svg",
+                                                    color: Colors.white,
+                                                    width: 50,
+                                                    height: 50,
+                                                  ),
+                                                  onPressed: () {
+                                                    showInfoDialog();
+                                                  },
+                                                ),
+                                              ),
+                                            ]))),
+                                    Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          color: Colors.black,
+                                          child: TextField(
+                                            maxLines: 100,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                            decoration: InputDecoration(
+                                              hintText: "TYPE HERE...",
+                                              hintStyle: TextStyle(
+                                                  color: Colors.white),
+                                              border: InputBorder.none,
+                                              enabledBorder: InputBorder.none,
                                             ),
-                                            onPressed: () {
-                                              showInfoDialog();
-                                            },
-                                          ))),
-                                  Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        color: Colors.black,
-                                        child: TextField(
-                                          maxLines: 100,
-                                          style: TextStyle(color: Colors.white),
-                                          decoration: InputDecoration(
-                                            hintText: "TYPE HERE...",
-                                            border: InputBorder.none,
-                                            enabledBorder: InputBorder.none,
                                           ),
-                                        ),
-                                      )),
-                                ],
-                              )),
-                          Expanded(
-                              flex: 3, child: Container(color: Colors.amber)),
-                        ],
-                      )),
-                    )
-                  ],
-                )),
-          )),
+                                        )),
+                                  ],
+                                )),
+                            Expanded(
+                                flex: 3, child: Container(color: Colors.amber)),
+                          ],
+                        )),
+                      )
+                    ],
+                  )))),
     );
   }
 }
