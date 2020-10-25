@@ -4,6 +4,7 @@ import 'package:shopping/models/Product.dart';
 import 'package:shopping/screens/Details/components/ColorDot.dart';
 import 'package:shopping/screens/Details/components/ColorSizeContainer.dart';
 import 'package:shopping/screens/Details/components/DetailProvider/ColorProvider.dart';
+import 'package:shopping/screens/Details/components/Information.dart';
 import 'package:shopping/screens/Details/components/ProductTitleWithImage.dart';
 import 'package:shopping/screens/HomeScreen/constant.dart';
 
@@ -15,32 +16,41 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
     return SingleChildScrollView(
-        child: Column(
-      children: <Widget>[
-        SizedBox(
-            height: size.height,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                    margin: EdgeInsets.only(top: size.height * 0.3),
-                    padding: EdgeInsets.only(
-                        top: size.height * 0.12,
-                        left: defaultPadding,
-                        right: defaultPadding),
-                    height: size.height * 0.7,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(24),
-                            topRight: Radius.circular(24))),
-                    child: Column(
-                      children: <Widget>[ColorSizeContainer(product: product)],
-                    )),
-                ProductTitleWithImage(product: this.product),
-              ],
-            )),
-      ],
-    ));
+        reverse: true,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: bottom),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                  height: size.height,
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                          margin: EdgeInsets.only(top: size.height * 0.3),
+                          padding: EdgeInsets.only(
+                              top: size.height * 0.12,
+                              left: defaultPadding,
+                              right: defaultPadding),
+                          height: size.height * 0.7,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(24),
+                                  topRight: Radius.circular(24))),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              ColorSizeContainer(product: product),
+                              Information()
+                            ],
+                          )),
+                      ProductTitleWithImage(product: this.product),
+                    ],
+                  )),
+            ],
+          ),
+        ));
   }
 }

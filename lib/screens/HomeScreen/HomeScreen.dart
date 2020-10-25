@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shopping/screens/Details/DetailScreen.dart';
 import 'package:shopping/screens/HomeScreen/components/body.dart';
 import 'package:shopping/screens/HomeScreen/constant.dart';
+import 'package:shopping/screens/UserLogin/UserLogin.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -45,6 +47,17 @@ class HomeScreenState extends State<HomeScreen> {
                 icon:
                     SvgPicture.asset("assets/icons/cart.svg", color: iconColor),
                 onPressed: () {})),
+        Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: IconButton(
+                icon: Icon(Icons.person),
+                color: iconColor,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return UserLogin();
+                  }));
+                })),
       ],
     );
   }
