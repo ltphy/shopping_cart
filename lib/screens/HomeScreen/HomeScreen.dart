@@ -13,7 +13,15 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: buildAppBar(), body: Body());
+    return Scaffold(
+      appBar: buildAppBar(),
+      body: Body(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.navigation),
+        backgroundColor: Colors.redAccent,
+      ),
+    );
   }
 
   AppBar buildAppBar() {

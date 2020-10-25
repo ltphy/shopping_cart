@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping/models/Product.dart';
+import 'package:shopping/screens/Details/DetailScreen.dart';
 import 'package:shopping/screens/HomeScreen/components/ItemCard.dart';
 import 'package:shopping/screens/HomeScreen/constant.dart';
 
@@ -11,10 +12,6 @@ class ItemListCard extends StatefulWidget {
 class _ItemListCardState extends State<ItemListCard> {
   @override
   Widget build(BuildContext context) {
-    void onPress() {
-      print("OnPress");
-    }
-
     print("RERENDER");
     return Container(
         padding: EdgeInsets.all(10),
@@ -26,9 +23,19 @@ class _ItemListCardState extends State<ItemListCard> {
               mainAxisSpacing: defaultPadding,
               crossAxisSpacing: defaultPadding,
             ),
-            itemBuilder: (context, index) => ItemCard(
-                  product: products[index],
-                  onPress: onPress,
-                )));
+            itemBuilder: (context, index) {
+              void onPress() {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DetailScreen(product: products[index])));
+              }
+
+              return ItemCard(
+                product: products[index],
+                onPress: onPress,
+              );
+            }));
   }
 }

@@ -12,7 +12,6 @@ class MyModel extends ChangeNotifier {
     }
     print(someValue);
     notifyListeners();
-
   }
 
   void setSomeThing() {}

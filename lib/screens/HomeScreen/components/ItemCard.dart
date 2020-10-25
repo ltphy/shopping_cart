@@ -17,7 +17,7 @@ class ItemCard extends StatelessWidget {
     return Consumer<MyModel>(builder: (context, myModel, child) {
       return GestureDetector(
           onTap: () {
-            onPress();
+            this.onPress();
           },
           child: Container(
               child: Column(
