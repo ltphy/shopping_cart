@@ -27,6 +27,7 @@ class _LeftSidePanelState extends State<LeftSidePanel> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     Map<String, dynamic> userObj = widget.userInfo.toJson();
+
     double sideBarWidth = size.width * 0.25;
     return SidePanel(
         expand: isShowPanel,
