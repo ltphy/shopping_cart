@@ -2,12 +2,13 @@ class LocationInfo {
   final String address;
   final double x;
   final double y;
+  final double theta;
 
-  LocationInfo(this.address, this.x, this.y);
+  LocationInfo(this.address, this.x, this.y, this.theta);
 
   factory LocationInfo.fromJson(Map<String, dynamic> locationInfo) {
-    return LocationInfo(
-        locationInfo["address"], locationInfo["x"], locationInfo["y"]);
+    return LocationInfo(locationInfo["address"], locationInfo["x"],
+        locationInfo["y"], locationInfo["theta"]);
   }
 }
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shopping/models/InfoList.dart';
 import 'package:shopping/screens/HomeScreen/SidePanel/SidePanel.dart';
 import 'package:shopping/screens/map_screen/map_screen.constants.dart';
 import 'package:shopping/screens/map_screen/map_screen.dart';
@@ -31,7 +32,18 @@ class _BodyState extends State<Body> {
     print("x: ${scenePoint.dx}, y: ${scenePoint.dy}");
     LocationPoint locationPoint =
         locationMap.getLocationPointFromOffset(scenePoint);
-    context.read<LocationProvider>().updateSourceLocation(locationPoint);
+    if (locationPoint != null) {
+      context.read<LocationProvider>().updateSourceLocation(locationPoint);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    InfoList infoList = InfoList();
+    print(infoList.value);
+    print(infoList.infoList.length);
+
   }
 
   @override

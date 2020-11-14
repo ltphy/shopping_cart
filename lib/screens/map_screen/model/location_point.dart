@@ -36,8 +36,11 @@ class LocationMap {
 
   LocationPoint getLocationPointFromOffset(Offset point) {
     LocationPoint locationPoint = this.locationList.firstWhere((element) {
-      Offset iconCenter = element.center.translate(0, -iconSize / 2);
-      return getDistance(point, iconCenter) <= iconSize / 2;
+      Offset iconCenter = element.center.translate(
+          cos(element.locationInfo.theta) * iconSize / 2,
+          sin(element.locationInfo.theta) * iconSize / 2);
+      return getDistance(point, iconCenter) <= iconSize / 2 ||
+          getDistance(point, element.center) <= element.radius;
     }, orElse: () => null);
     return locationPoint;
   }

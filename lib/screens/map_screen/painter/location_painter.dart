@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shopping/screens/map_screen/map_screen.constants.dart';
 import 'package:shopping/screens/map_screen/model/location_point.dart';
@@ -9,11 +11,15 @@ class LocationPainter extends CustomPainter {
   Offset center;
   LocationMap locationMap;
   final Paint circlePaint = new Paint()
-    ..color = Colors.blueAccent
+    ..color = Colors.red
     ..strokeWidth = 10
     ..style = PaintingStyle.fill;
   final Paint locationPaint = new Paint()
-    ..color = Colors.white
+    ..color = Colors.blue
+    ..strokeWidth = 10
+    ..style = PaintingStyle.stroke;
+  final Paint locationCenterPaint = new Paint()
+    ..color = Colors.yellow
     ..strokeWidth = 10
     ..style = PaintingStyle.stroke;
 
@@ -32,25 +38,54 @@ class LocationPainter extends CustomPainter {
     });
 
     this.locationMap.locationList.forEach((element) {
+      drawLocationIcon(canvas, element);
+    });
+
+    this.locationMap.locationList.forEach((element) {
       print("DRAW LOCATION");
       print(element.center);
-      drawLocationIcon(canvas, element);
+      drawLocation(canvas, element);
+      drawLocationCenter(canvas, element);
     });
   }
 
   void drawLocation(Canvas canvas, LocationPoint point) {
     canvas.drawCircle(point.center, point.radius, circlePaint);
+
+    Offset iconCenter = point.center.translate(
+        cos(point.locationInfo.theta) * iconSize / 2,
+        sin(point.locationInfo.theta) * iconSize / 2);
+    canvas.drawCircle(iconCenter, point.radius, circlePaint);
+  }
+
+  void drawLocationCenter(Canvas canvas, LocationPoint point) {
+    Offset iconCenter = point.center.translate(
+        cos(point.locationInfo.theta) * iconSize / 2,
+        sin(point.locationInfo.theta) * iconSize / 2);
+    canvas.drawCircle(iconCenter, point.radius, locationCenterPaint);
   }
 
   void drawLocationIcon(Canvas canvas, LocationPoint point) {
-    final icon = Icons.location_on_outlined;
+    canvas.save();
+    final icon = Icons.arrow_upward;
+    final radians = point.locationInfo.theta + pi / 2;
     TextPainter textPainter = TextPainter(textDirection: TextDirection.rtl);
     textPainter.text = TextSpan(
         text: String.fromCharCode(icon.codePoint),
         style: TextStyle(
-            height: 1, fontSize: iconSize, fontFamily: icon.fontFamily));
+            backgroundColor: Colors.white,
+            color: Colors.grey,
+            height: 1,
+            fontSize: iconSize,
+            fontFamily: icon.fontFamily));
     textPainter.layout();
-    textPainter.paint(canvas, translateToIconLocation(point.center, iconSize));
+    Offset offset = translateToIconLocation(point.center, iconSize);
+    canvas.translate(point.center.dx, point.center.dy);
+    canvas.rotate(radians);
+    canvas.translate(-point.center.dx, -point.center.dy);
+
+    textPainter.paint(canvas, offset);
+    canvas.restore();
   }
 
   Offset translateToCenter(Offset point) {

@@ -10,6 +10,7 @@ class MarkerPainter extends CustomPainter {
   Offset center;
   final LocationProvider locationProvider;
   TextPainter textPainter = TextPainter(textDirection: TextDirection.rtl);
+  TextPainter sourcePainter = TextPainter(textDirection: TextDirection.rtl);
 
   MarkerPainter(this.locationProvider);
 
@@ -17,10 +18,12 @@ class MarkerPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     print("REDRAW MARKER");
     this.center = Offset(size.width / 2, size.height / 2);
-    drawMarker(canvas, locationProvider.source);
+    if (locationProvider.source != null) {
+      drawLocationSourceIcon(canvas, locationProvider.source);
+    }
   }
 
-  void drawMarker(Canvas canvas, LocationPoint locationPoint) {
+  void drawDstMarker(Canvas canvas, LocationPoint locationPoint) {
     if (locationPoint != null) {
       final icon = Icons.location_on_rounded;
       textPainter.text = TextSpan(
@@ -34,6 +37,20 @@ class MarkerPainter extends CustomPainter {
       textPainter.paint(
           canvas, translateToIconLocation(locationPoint.center, iconSize));
     }
+  }
+
+  void drawLocationSourceIcon(Canvas canvas, LocationPoint locationPoint) {
+    final icon = Icons.trip_origin_rounded;
+    sourcePainter.text = TextSpan(
+        text: String.fromCharCode(icon.codePoint),
+        style: TextStyle(
+            color: Colors.green,
+            height: 1,
+            fontSize: iconSize / 2,
+            fontFamily: icon.fontFamily));
+    sourcePainter.layout();
+    sourcePainter.paint(
+        canvas, locationPoint.center.translate(-iconSize / 4, -iconSize / 4));
   }
 
   @override
