@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping/models/Product.dart';
 import 'package:shopping/screens/Details/DetailScreen.dart';
 import 'package:shopping/screens/HomeScreen/components/ItemCard.dart';
 import 'package:shopping/screens/HomeScreen/constant.dart';
+import 'package:shopping/services/provider/ProductListProvider.dart';
+import 'package:shopping/services/provider/SelectedProductProvider.dart';
 
 class ItemListCard extends StatefulWidget {
   @override
@@ -12,30 +15,39 @@ class ItemListCard extends StatefulWidget {
 class _ItemListCardState extends State<ItemListCard> {
   @override
   Widget build(BuildContext context) {
-    print("RERENDER");
-    return Container(
-        padding: EdgeInsets.all(10),
-        child: GridView.builder(
-            itemCount: products.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.75,
-              mainAxisSpacing: defaultPadding,
-              crossAxisSpacing: defaultPadding,
-            ),
-            itemBuilder: (context, index) {
-              void onPress() {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            DetailScreen(product: products[index])));
-              }
+    //item list card =>
+    return Consumer<ProductListProvider>(
+      builder: (BuildContext context, productsListProvider, Widget child) {
+        return Container(
+            padding: EdgeInsets.all(10),
+            child: GridView.builder(
+                itemCount: productsListProvider.selectedProducts.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.75,
+                  mainAxisSpacing: defaultPadding,
+                  crossAxisSpacing: defaultPadding,
+                ),
+                itemBuilder: (context, index) {
+                  void onPress() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                DetailScreen(product: products[index])));
+                  }
 
-              return ItemCard(
-                product: products[index],
-                onPress: onPress,
-              );
-            }));
+                  String key = productsListProvider.selectedProducts.keys
+                      .elementAt(index);
+                  return ItemCard(
+                    product: productsListProvider.selectedProducts.values
+                        .elementAt(index),
+                    isSelected:
+                        key == context.watch<SelectedProductProvider>().uuid,
+                    uuid: key,
+                  );
+                }));
+      },
+    );
   }
 }
