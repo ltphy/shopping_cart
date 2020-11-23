@@ -28,6 +28,7 @@ class HomeScreenState extends State<HomeScreen> {
   double panelHeightClosed = 95.0;
   bool isOpen;
   PanelState panelState = PanelState.CLOSED;
+  double floatingBtnHeight = 10;
 
   @override
   void initState() {
@@ -54,6 +55,7 @@ class HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           appBar: buildAppBar(),
           body: SlidingUpPanel(
+            onPanelClosed: () {},
             controller: _pc,
             color: Colors.transparent,
             body: Body(),
@@ -61,13 +63,18 @@ class HomeScreenState extends State<HomeScreen> {
             minHeight: panelHeightClosed,
             backdropOpacity: 0,
             backdropEnabled: true,
-            parallaxOffset: 0.5,
+            // parallaxOffset: 0.5,
             panel: buildPanel(),
             defaultPanelState: panelState,
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {},
-            child: Icon(Icons.navigation),
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: floatingBtnHeight,
+              ),
+              child: Icon(Icons.navigation),
+            ),
             backgroundColor: Colors.redAccent,
           ),
         ));
@@ -79,39 +86,52 @@ class HomeScreenState extends State<HomeScreen> {
     return Container(
         child: Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                child: Icon(Icons.arrow_drop_up_outlined, color: Colors.black),
-                color: Colors.transparent)
-          ],
+        Container(
+          height: 0.1 * panelHeightOpen,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  child: Icon(
+                    Icons.arrow_drop_up_outlined,
+                    color: Colors.black,
+                  ),
+                  color: Colors.transparent)
+            ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                height: panelHeightOpen * 0.7,
-                width: widthSize * 0.8,
-                decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12.0),
-                        topRight: Radius.circular(12.0))),
-                child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () {
-                          print("HERE");
-                          _pc.close();
-                        },
-                        child: Container(
-                            color: Colors.yellow,
-                            padding: EdgeInsets.all(defaultPadding),
-                            child: Text(index.toString())));
-                  },
-                ))
-          ],
+        Container(
+          decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12.0),
+                  topRight: Radius.circular(12.0))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  padding: EdgeInsets.only(top: panelHeightOpen * 0.1),
+                  height: panelHeightOpen * 0.8,
+                  width: widthSize * 0.8,
+                  child: ListView.builder(
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                          onTap: () {
+                            print("HERE");
+                            _pc.close();
+                          },
+                          child: Container(
+                              color: Colors.yellow,
+                              padding: EdgeInsets.all(defaultPadding),
+                              child: Text(index.toString())));
+                    },
+                  ))
+            ],
+          ),
+        ),
+        Container(
+          height: panelHeightOpen * 0.1,
+          color: Colors.red,
         ),
       ],
     ));
