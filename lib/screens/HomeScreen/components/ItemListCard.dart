@@ -29,13 +29,6 @@ class _ItemListCardState extends State<ItemListCard> {
                   crossAxisSpacing: defaultPadding,
                 ),
                 itemBuilder: (context, index) {
-                  void onPress() {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                DetailScreen(product: products[index])));
-                  }
 
                   String key = productsListProvider.selectedProducts.keys
                       .elementAt(index);

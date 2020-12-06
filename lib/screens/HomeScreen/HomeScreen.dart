@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping/models/Product.dart';
-import 'package:shopping/screens/Details/DetailScreen.dart';
 import 'package:shopping/screens/HomeScreen/components/body.dart';
 import 'package:shopping/screens/HomeScreen/constant.dart';
 import 'package:shopping/screens/UserLogin/UserLogin.dart';
@@ -32,6 +31,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+
     // TODO: implement initState
     super.initState();
     isOpen = false;

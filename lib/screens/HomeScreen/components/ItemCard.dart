@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping/models/Product.dart';
+import 'package:shopping/screens/Details/DetailScreen.dart';
 import 'package:shopping/screens/HomeScreen/constant.dart';
 import 'package:shopping/services/provider/SelectedProductProvider.dart';
 
@@ -19,9 +20,12 @@ class ItemCard extends StatelessWidget {
     return Consumer<MyModel>(builder: (context, myModel, child) {
       return GestureDetector(
           onTap: () {
-            print("TAP $isSelected");
-            print(uuid);
-            context.read<SelectedProductProvider>().setSelectedProduct(uuid);
+            // context.read<SelectedProductProvider>().setSelectedProduct(uuid);
+
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DetailScreen(product: product)));
           },
           child: Container(
               decoration: ShapeDecoration(

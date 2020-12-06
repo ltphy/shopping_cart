@@ -34,7 +34,14 @@ class ProductTitleWithImage extends StatelessWidget {
               SizedBox(
                 width: defaultPadding,
               ),
-              Expanded(child: Container(child: Image.asset(product.image))),
+              Expanded(
+                  child: AspectRatio(
+                      aspectRatio: 3 / 1,
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Container(
+                              color: Colors.black,
+                              child: Image.asset(product.image))))),
             ],
           )
         ],
