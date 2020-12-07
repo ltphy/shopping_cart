@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopping/screens/responsive_screen/components/command_button.dart';
+import 'package:shopping/screens/responsive_screen/components/logger_server_widget.dart';
 import 'package:shopping/screens/responsive_screen/components/logger_widget.dart';
 import 'package:shopping/screens/responsive_screen/components/redis_form.dart';
 
@@ -51,6 +52,10 @@ class _BodyState extends State<Body> {
               Container(
                 height: 800,
                 child: LoggerWidget(),
+              ),
+              Container(
+                height: 800,
+                child: LoggerServerWidget(),
               )
             ],
           ),

@@ -5,14 +5,26 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping/generated/l10n.dart';
 import 'package:shopping/screens/responsive_screen/responsive_screen.dart';
+import 'package:shopping/services/logger/file_logger.dart';
 import 'package:shopping/services/provider/publish_subscribe_provider.dart';
+Future<String> _getDocsDir() async {
+  final directory = await getApplicationDocumentsDirectory();
+  return directory.path;
+}
+var _logFileName = "back_to_now.txt";
 
-void main() {
+
+Future<void> main() async {
   Logger.root.level = Level.ALL; // defaults to Level.INFO
   Logger.root.onRecord.listen((record) {
     print(
         '${record.time} ${record.level.name} ${record.loggerName} ${record.message}');
   });
+  var docsDir = await _getDocsDir();
+  String canonFilename = '$docsDir/$_logFilename';
+  await Lager.initializeLogging(canonFilename);
+  await Lager.log('ENTERED main() ...');
+
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
