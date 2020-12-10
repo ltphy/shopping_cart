@@ -40,7 +40,7 @@ class MarkerPainter extends CustomPainter {
   }
 
   void drawLocationSourceIcon(Canvas canvas, LocationPoint locationPoint) {
-    final icon = Icons.trip_origin_rounded;
+    final icon = Icons.arrow_upward;
     sourcePainter.text = TextSpan(
         text: String.fromCharCode(icon.codePoint),
         style: TextStyle(

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartis/dartis.dart';
 import 'package:shopping/constants/constants.dart';
+import 'package:shopping/services/logger/file_logger.dart';
 import 'package:shopping/services/redis_client/publish_client.dart';
 import 'package:shopping/services/redis_client/subscribe_client.dart';
 
@@ -30,6 +31,7 @@ class PublishSubscribeProvider {
       this.subClient = new SubscribeClient(uri);
       await subClient.connectToRedis();
       await subClient.subscribeToChannel(infoChannel, onReceivedInfo);
+      await Lager.log("Connect to $uri");
     } catch (error) {
       throw (error);
     }

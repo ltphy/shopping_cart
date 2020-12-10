@@ -22,6 +22,16 @@ class LocationPainter extends CustomPainter {
     ..color = Colors.yellow
     ..strokeWidth = 10
     ..style = PaintingStyle.stroke;
+  final double border = 2;
+  final Paint boxPaint = new Paint()
+    ..color = Colors.grey
+    ..strokeWidth = 2
+    ..strokeCap = StrokeCap.butt
+    ..style = PaintingStyle.stroke;
+
+  var paintRectBox = Paint()
+    ..color = Color(0xff638965)
+    ..style = PaintingStyle.fill;
 
   LocationPainter(LocationMap map) {
     this.locationMap = map;
@@ -42,10 +52,39 @@ class LocationPainter extends CustomPainter {
     });
 
     this.locationMap.locationList.forEach((element) {
-      print("DRAW LOCATION");
-      print(element.center);
-      drawLocation(canvas, element);
-      drawLocationCenter(canvas, element);
+      canvas.save();
+      final radians = element.locationInfo.theta;
+      double size = 1.4 * 10;
+
+      Offset offset = translateToIconLocation(element.center, iconSize);
+      canvas.translate(element.center.dx, element.center.dy);
+      canvas.rotate(radians);
+      canvas.translate(-element.center.dx , -element.center.dy);
+
+      double dx = element.center.dx-size;
+      double dy = element.center.dy-size/2;
+      Offset startingPoint = Offset(dx, dy);
+      Offset endingPoint = Offset(dx, dy + size);
+      canvas.drawLine(startingPoint, endingPoint, boxPaint);
+      startingPoint = Offset(dx, dy);
+      endingPoint = Offset(dx + size, dy);
+      canvas.drawLine(startingPoint, endingPoint, boxPaint);
+
+      startingPoint = Offset(dx, dy + size);
+      endingPoint = Offset(dx + size, dy + size);
+      canvas.drawLine(startingPoint, endingPoint, boxPaint);
+
+      startingPoint = Offset(dx + border, dy + border);
+      print(size - border);
+
+      canvas.drawRect(
+          Offset(dx + border / 2, dy + border / 2) &
+              Size(size - border, size - border ),
+          paintRectBox);
+      canvas.restore();
+
+      // drawLocation(canvas, element);
+      // drawLocationCenter(canvas, element);
     });
   }
 
@@ -55,7 +94,7 @@ class LocationPainter extends CustomPainter {
     Offset iconCenter = point.center.translate(
         cos(point.locationInfo.theta) * iconSize / 2,
         sin(point.locationInfo.theta) * iconSize / 2);
-    canvas.drawCircle(iconCenter, point.radius, circlePaint);
+    // canvas.drawCircle(iconCenter, point.radius, circlePaint);
   }
 
   void drawLocationCenter(Canvas canvas, LocationPoint point) {
@@ -73,7 +112,6 @@ class LocationPainter extends CustomPainter {
     textPainter.text = TextSpan(
         text: String.fromCharCode(icon.codePoint),
         style: TextStyle(
-            backgroundColor: Colors.white,
             color: Colors.grey,
             height: 1,
             fontSize: iconSize,

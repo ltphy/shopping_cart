@@ -4,6 +4,7 @@ import 'package:shopping/screens/responsive_screen/components/command_button.dar
 import 'package:shopping/screens/responsive_screen/components/logger_server_widget.dart';
 import 'package:shopping/screens/responsive_screen/components/logger_widget.dart';
 import 'package:shopping/screens/responsive_screen/components/redis_form.dart';
+import 'package:shopping/services/log_info/log_info_list.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -49,14 +50,14 @@ class _BodyState extends State<Body> {
                 ],
               ),
               CommandButton(),
-              Container(
-                height: 800,
-                child: LoggerWidget(),
-              ),
-              Container(
-                height: 800,
-                child: LoggerServerWidget(),
-              )
+              // Container(
+              //   height: 800,
+              //   child: LoggerWidget(),
+              // ),
+              // Container(
+              //   height: 800,
+              //   child: LoggerServerWidget(),
+              // )
             ],
           ),
         );

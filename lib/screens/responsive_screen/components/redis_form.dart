@@ -40,6 +40,7 @@ class _RedisFormState extends State<RedisForm> {
                     context
                         .read<PublishSubscribeProvider>()
                         .connectToRedis('redis://127.0.0.1:6379');
+
                   }
                 },
                 child: Text('Connect'),
