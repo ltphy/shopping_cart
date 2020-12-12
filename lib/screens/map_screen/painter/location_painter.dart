@@ -22,12 +22,10 @@ class LocationPainter extends CustomPainter {
     ..color = Colors.yellow
     ..strokeWidth = 10
     ..style = PaintingStyle.stroke;
-  final double border = 2;
-  final Paint boxPaint = new Paint()
+  final double border = 0.1;
+  final Paint paintBoundary = new Paint()
     ..color = Colors.grey
-    ..strokeWidth = 2
-    ..strokeCap = StrokeCap.butt
-    ..style = PaintingStyle.stroke;
+    ..style = PaintingStyle.fill;
 
   var paintRectBox = Paint()
     ..color = Color(0xff638965)
@@ -54,33 +52,35 @@ class LocationPainter extends CustomPainter {
     this.locationMap.locationList.forEach((element) {
       canvas.save();
       final radians = element.locationInfo.theta;
-      double size = 1.4 * 10;
-
+      double size = 1.25 * 70;
+      double borderWidth = 0.1 * 70;
       Offset offset = translateToIconLocation(element.center, iconSize);
+      //translate to center
       canvas.translate(element.center.dx, element.center.dy);
+      //rotate
       canvas.rotate(radians);
-      canvas.translate(-element.center.dx , -element.center.dy);
+      //translate back
+      canvas.translate(-element.center.dx, -element.center.dy);
+      //dx - size, dy -size/2
+      double dx = element.center.dx - size;
+      double dy = element.center.dy - size / 2;
 
-      double dx = element.center.dx-size;
-      double dy = element.center.dy-size/2;
-      Offset startingPoint = Offset(dx, dy);
-      Offset endingPoint = Offset(dx, dy + size);
-      canvas.drawLine(startingPoint, endingPoint, boxPaint);
-      startingPoint = Offset(dx, dy);
-      endingPoint = Offset(dx + size, dy);
-      canvas.drawLine(startingPoint, endingPoint, boxPaint);
-
-      startingPoint = Offset(dx, dy + size);
-      endingPoint = Offset(dx + size, dy + size);
-      canvas.drawLine(startingPoint, endingPoint, boxPaint);
-
-      startingPoint = Offset(dx + border, dy + border);
       print(size - border);
+      //
+      canvas.drawRect(
+          Offset(dx + borderWidth, dy + borderWidth) &
+              Size(size - (2 * borderWidth), size - (2 * borderWidth)),
+          paintRectBox);
+      canvas.drawRect(Offset(dx, dy) & Size(size, borderWidth), paintBoundary);
 
       canvas.drawRect(
-          Offset(dx + border / 2, dy + border / 2) &
-              Size(size - border, size - border ),
-          paintRectBox);
+          Offset(dx, dy + borderWidth) &
+              Size(borderWidth, size - 2 * borderWidth),
+          paintBoundary);
+
+      canvas.drawRect(
+          Offset(dx, dy + size - borderWidth) & Size(size, borderWidth),
+          paintBoundary);
       canvas.restore();
 
       // drawLocation(canvas, element);
