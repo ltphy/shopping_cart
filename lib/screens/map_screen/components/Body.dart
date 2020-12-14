@@ -7,6 +7,7 @@ import 'package:shopping/screens/map_screen/map_screen.constants.dart';
 import 'package:shopping/screens/map_screen/map_screen.dart';
 import 'package:shopping/screens/map_screen/model/location_info.dart';
 import 'package:shopping/screens/map_screen/model/location_point.dart';
+import 'package:shopping/screens/map_screen/painter/canvas_painter.dart';
 import 'package:shopping/screens/map_screen/painter/location_painter.dart';
 import 'package:shopping/screens/map_screen/painter/marker_painter.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,6 @@ class _BodyState extends State<Body> {
     InfoList infoList = InfoList();
     print(infoList.value);
     print(infoList.infoList.length);
-
   }
 
   @override
@@ -89,6 +89,9 @@ class _BodyState extends State<Body> {
                       CustomPaint(
                           painter:
                               MarkerPainter(context.watch<LocationProvider>()),
+                          child: Container()),
+                      CustomPaint(
+                          painter: CanvasPainter(locationMap),
                           child: Container()),
                     ]),
                   ),

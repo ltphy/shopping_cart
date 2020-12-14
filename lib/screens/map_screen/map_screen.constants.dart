@@ -24,7 +24,7 @@ const objJson = {
     {
       "x": 0.458955,
       "y": 0.4938522,
-      "theta":2.5,
+      "theta":3.14,
       "address": "2 Nguyen Van Cu",
     }
   ]
