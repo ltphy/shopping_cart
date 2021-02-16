@@ -29,7 +29,6 @@ class _ItemListCardState extends State<ItemListCard> {
                   crossAxisSpacing: defaultPadding,
                 ),
                 itemBuilder: (context, index) {
-
                   String key = productsListProvider.selectedProducts.keys
                       .elementAt(index);
                   return ItemCard(

@@ -25,6 +25,7 @@ class ItemCard extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
+
                     builder: (context) => DetailScreen(product: product)));
           },
           child: Container(

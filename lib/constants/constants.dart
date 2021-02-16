@@ -1,10 +1,14 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shopping/models/book.dart';
 
 String infoChannel = "info";
 String reqChannel = "req";
 String redisURL = "redis://192.168.87.105:6379";
 DrawableRoot svgDuck;
-
+String mainScreen = "mainScreen";
+String bookDetail = "/bookDetail";
+String booksList = "/booksList";
+String bookStoresRoute = "/bookStores";
 final String smallDuckString =
     """<<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
