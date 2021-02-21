@@ -1,6 +1,6 @@
 class Book {
-  final String title;
-  final String author;
+  String title;
+  String author;
 
   Book(this.title, this.author);
 }

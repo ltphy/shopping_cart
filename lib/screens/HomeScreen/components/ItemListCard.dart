@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping/models/Product.dart';
-import 'package:shopping/screens/Details/DetailScreen.dart';
 import 'package:shopping/screens/HomeScreen/components/ItemCard.dart';
 import 'package:shopping/screens/HomeScreen/constant.dart';
 import 'package:shopping/services/provider/ProductListProvider.dart';

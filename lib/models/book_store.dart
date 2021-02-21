@@ -2,7 +2,7 @@ import 'package:shopping/models/book.dart';
 
 class BookStore {
   final String name;
-  final List<Book> books;
+  List<Book> books;
 
   BookStore(this.name, this.books);
 }
